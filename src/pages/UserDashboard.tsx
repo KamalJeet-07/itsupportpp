@@ -98,16 +98,16 @@ export default function UserDashboard() {
     <div className="min-h-screen bg-gray-50">
       <nav className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-800">IT Support Dashboard</h1>
+          <div className="flex flex-col sm:flex-row justify-between items-center">
+            <h1 className="text-2xl font-bold text-gray-800 mb-2 sm:mb-0">IT Support Dashboard</h1>
             <div className="flex items-center space-x-4">
-              <span className="text-gray-600">{user?.email}</span>
+              <span className="text-gray-600 text-sm sm:text-base">{user?.email}</span>
               <button
                 onClick={handleSignOut}
                 className="flex items-center space-x-2 text-gray-600 hover:text-gray-800"
               >
                 <LogOut className="h-5 w-5" />
-                <span>Sign Out</span>
+                <span className="hidden sm:inline">Sign Out</span>
               </button>
             </div>
           </div>
@@ -116,15 +116,15 @@ export default function UserDashboard() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white rounded-lg shadow p-6">
-          <div className="flex justify-between items-center mb-6">
-            <div className="flex items-center space-x-4">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 space-y-4 md:space-y-0">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
               <h2 className="text-xl font-semibold">My Tickets</h2>
               <button
                 onClick={fetchTickets}
                 className="flex items-center space-x-2 text-indigo-600 hover:text-indigo-800"
               >
                 <RefreshCw className="h-5 w-5" />
-                <span>Refresh</span>
+                <span className="hidden sm:inline">Refresh</span>
               </button>
             </div>
             <button
@@ -132,14 +132,14 @@ export default function UserDashboard() {
               className="flex items-center space-x-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700"
             >
               <Plus className="h-5 w-5" />
-              <span>New Ticket</span>
+              <span className="hidden sm:inline">New Ticket</span>
             </button>
           </div>
 
           {showForm && (
             <form onSubmit={createTicket} className="mb-8 bg-gray-50 p-6 rounded-lg">
-              <div className="grid grid-cols-1 gap-6">
-                <div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="md:col-span-3">
                   <label className="block text-sm font-medium text-gray-700">Title</label>
                   <input
                     type="text"
@@ -150,7 +150,7 @@ export default function UserDashboard() {
                   />
                 </div>
 
-                <div>
+                <div className="md:col-span-3">
                   <label className="block text-sm font-medium text-gray-700">Description</label>
                   <textarea
                     required
@@ -161,47 +161,45 @@ export default function UserDashboard() {
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Priority</label>
-                    <select
-                      value={form.priority}
-                      onChange={(e) => setForm({ ...form, priority: e.target.value })}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                    >
-                      <option value="low">Low</option>
-                      <option value="medium">Medium</option>
-                      <option value="high">High</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Category</label>
-                    <select
-                      value={form.category}
-                      onChange={(e) => setForm({ ...form, category: e.target.value })}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                    >
-                      <option value="Hardware">Hardware</option>
-                      <option value="Software">Software</option>
-                      <option value="Network">Network</option>
-                      <option value="Other">Other</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Expected Date</label>
-                    <input
-                      type="date"
-                      required
-                      value={form.expectedDate}
-                      onChange={(e) => setForm({ ...form, expectedDate: e.target.value })}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                    />
-                  </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Priority</label>
+                  <select
+                    value={form.priority}
+                    onChange={(e) => setForm({ ...form, priority: e.target.value })}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                  >
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                  </select>
                 </div>
 
-                <div className="flex justify-end space-x-3">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Category</label>
+                  <select
+                    value={form.category}
+                    onChange={(e) => setForm({ ...form, category: e.target.value })}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                  >
+                    <option value="Hardware">Hardware</option>
+                    <option value="Software">Software</option>
+                    <option value="Network">Network</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Expected Date</label>
+                  <input
+                    type="date"
+                    required
+                    value={form.expectedDate}
+                    onChange={(e) => setForm({ ...form, expectedDate: e.target.value })}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                  />
+                </div>
+
+                <div className="md:col-span-3 flex justify-end space-x-3">
                   <button
                     type="button"
                     onClick={() => setShowForm(false)}
@@ -273,7 +271,7 @@ export default function UserDashboard() {
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {ticket.priority}
+                        {ticket.priority.charAt(0).toUpperCase() + ticket.priority.slice(1)}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {ticket.category}
