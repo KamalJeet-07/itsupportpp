@@ -70,39 +70,45 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Navigation Bar */}
       <nav className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-800">Admin Dashboard</h1>
+          <div className="flex flex-col sm:flex-row justify-between items-center">
+            <h1 className="text-2xl font-bold text-gray-800 mb-2 sm:mb-0">Admin Dashboard</h1>
             <div className="flex items-center space-x-4">
-              <span className="text-gray-600">{user?.email}</span>
+              <span className="text-gray-600 text-sm sm:text-base">{user?.email}</span>
               <button
                 onClick={handleSignOut}
                 className="flex items-center space-x-2 text-gray-600 hover:text-gray-800"
               >
                 <LogOut className="h-5 w-5" />
-                <span>Sign Out</span>
+                <span className="hidden sm:inline">Sign Out</span>
               </button>
             </div>
           </div>
         </div>
       </nav>
 
+      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white rounded-lg shadow p-6">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 space-y-4 sm:space-y-0">
-            <div className="flex items-center space-x-4">
+          {/* Header Section */}
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 space-y-4 md:space-y-0">
+            {/* Title and Refresh Button */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
               <h2 className="text-xl font-semibold">All Tickets</h2>
               <button
                 onClick={fetchTickets}
                 className="flex items-center space-x-2 text-indigo-600 hover:text-indigo-800"
               >
                 <RefreshCw className="h-5 w-5" />
-                <span>Refresh</span>
+                <span className="hidden sm:inline">Refresh</span>
               </button>
             </div>
             
+            {/* Search and Filter Controls */}
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 w-full sm:w-auto">
+              {/* Search Input */}
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
                 <input
@@ -110,14 +116,15 @@ export default function AdminDashboard() {
                   placeholder="Search tickets..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 w-full sm:w-64"
                 />
               </div>
               
+              {/* Filter Dropdown */}
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 w-full sm:w-auto"
               >
                 <option value="all">All Status</option>
                 <option value="open">Open</option>
@@ -127,6 +134,7 @@ export default function AdminDashboard() {
             </div>
           </div>
           
+          {/* Content Section */}
           {loading ? (
             <div className="text-center py-8">Loading tickets...</div>
           ) : filteredTickets.length === 0 ? (
