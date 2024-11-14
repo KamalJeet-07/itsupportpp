@@ -2,6 +2,7 @@
 import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from './store/authStore';
+import { ClipLoader } from 'react-spinners';
 
 
 interface ProtectedRouteProps {
@@ -16,7 +17,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requireAdmin 
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
-
+            <ClipLoader size={50} color="#123abc" />
       </div>
     );
   }

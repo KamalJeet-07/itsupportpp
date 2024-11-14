@@ -34,7 +34,7 @@ export default function Login() {
     try {
       await signIn(email, password);
       toast.success('Successfully logged in!');
-      // Navigation will happen in useEffect
+      // Navigation handled in useEffect
     } catch (error: any) {
       const message = error?.message || 'Login failed!';
       toast.error(message);
