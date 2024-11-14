@@ -18,9 +18,11 @@ export default function Login() {
   const location = useLocation();
   const { signIn, user, isAdmin, isLoading } = useAuthStore();
 
+  // Define the type for location.state
   const state = location.state as LocationState;
   const from = state?.from?.pathname || '/dashboard';
 
+  // useEffect to navigate when user and isAdmin are updated
   useEffect(() => {
     if (!isLoading && user) {
       navigate(isAdmin ? '/admin' : from, { replace: true });
@@ -30,9 +32,9 @@ export default function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const adminStatus = await signIn(email, password);
+      await signIn(email, password);
       toast.success('Successfully logged in!');
-      navigate(adminStatus ? '/admin' : from, { replace: true });
+      // Navigation will happen in useEffect
     } catch (error: any) {
       const message = error?.message || 'Login failed!';
       toast.error(message);
@@ -85,9 +87,9 @@ export default function Login() {
           <button
             type="submit"
             className="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-200 transition duration-200 disabled:opacity-50"
-            disabled={!email || !password}
+            disabled={!email || !password || isLoading}
           >
-            Sign In
+            {isLoading ? 'Signing In...' : 'Sign In'}
           </button>
         </form>
       </div>

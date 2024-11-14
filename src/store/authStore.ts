@@ -33,6 +33,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       if (error) throw error;
       const isAdmin = data.user?.email?.toLowerCase() === 'admin@admin.com';
       set({ user: data.user, isAdmin, isLoading: false });
+      console.log('Sign-in successful:', data.user, 'isAdmin:', isAdmin);
       return isAdmin;
     } catch (error) {
       console.error('Sign-in error:', error);
@@ -46,6 +47,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     try {
       await supabase.auth.signOut();
       set({ user: null, isAdmin: false, isLoading: false });
+      console.log('Sign-out successful');
     } catch (error) {
       console.error('Sign-out error:', error);
       set({ isLoading: false });
@@ -65,8 +67,10 @@ export const useAuthStore = create<AuthState>((set) => ({
       if (session?.user) {
         const isAdmin = session.user.email?.toLowerCase() === 'admin@admin.com';
         set({ user: session.user, isAdmin, isLoading: false });
+        console.log('Session active:', session.user, 'isAdmin:', isAdmin);
       } else {
         set({ user: null, isAdmin: false, isLoading: false });
+        console.log('No active session');
       }
     } catch (error) {
       console.error('Session check error:', error);
