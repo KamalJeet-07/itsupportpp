@@ -1,23 +1,41 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// pages/Login.tsx
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import { KeyRound, Mail } from 'lucide-react';
 import toast from 'react-hot-toast';
+
+interface LocationState {
+  from?: {
+    pathname: string;
+  };
+}
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const { signIn, isAdmin } = useAuthStore();
+  const location = useLocation();
+  const { signIn, user, isAdmin, isLoading } = useAuthStore();
+
+  const state = location.state as LocationState;
+  const from = state?.from?.pathname || '/dashboard';
+
+  useEffect(() => {
+    if (!isLoading && user) {
+      navigate(isAdmin ? '/admin' : from, { replace: true });
+    }
+  }, [user, isAdmin, isLoading, navigate, from]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await signIn(email, password);
-      navigate(isAdmin ? '/admin' : '/dashboard');
+      const adminStatus = await signIn(email, password);
       toast.success('Successfully logged in!');
+      navigate(adminStatus ? '/admin' : from, { replace: true });
     } catch (error: any) {
-      toast.error(error.message);
+      const message = error?.message || 'Login failed!';
+      toast.error(message);
     }
   };
 
@@ -66,7 +84,8 @@ export default function Login() {
 
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-200 transition duration-200"
+            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-200 transition duration-200 disabled:opacity-50"
+            disabled={!email || !password}
           >
             Sign In
           </button>
