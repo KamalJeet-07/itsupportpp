@@ -1,6 +1,6 @@
 // App.tsx
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import Login from './pages/Login';
 import UserDashboard from './pages/UserDashboard';
@@ -16,7 +16,6 @@ const App: React.FC = () => {
   }, [checkSession]);
 
   if (isLoading) {
-    // Global loading indicator; replace with a spinner or skeleton as desired
     return (
       <div className="flex items-center justify-center h-screen">
         <div className="text-xl">Loading...</div>
@@ -25,7 +24,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Toaster position="top-right" />
       <Routes>
         <Route path="/login" element={<Login />} />
@@ -48,7 +47,7 @@ const App: React.FC = () => {
         {/* Fallback route for undefined paths */}
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
