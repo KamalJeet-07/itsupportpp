@@ -188,16 +188,7 @@ export default function UserDashboard() {
                   </select>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Expected Date</label>
-                  <input
-                    type="date"
-                    required
-                    value={form.expectedDate}
-                    onChange={(e) => setForm({ ...form, expectedDate: e.target.value })}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                  />
-                </div>
+
 
                 <div className="md:col-span-3 flex justify-end space-x-3">
                   <button
